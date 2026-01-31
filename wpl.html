@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>cricketlive.site & filmyfly4wap.site</title>
+<title>cricketlive.site</title>
 
 <style>
 body{
@@ -14,12 +14,11 @@ body{
 }
 
 h2{
-  box-shadow:0 8px 20px -10px rgba(0,0,0,0.6);
   padding:10px 20px;
   font-size:20px;
 }
 
-/* LIST ITEMS */
+/* LIST */
 .item{
   width:100%;
   background:none;
@@ -39,25 +38,10 @@ h2{
   margin:0 15px 0 10px;
 }
 
-.title{
-  color:#eee;
-  font-size:15px;
-  font-weight:bold;
-}
-
-.link-text{
-  color:#2962ff;
-  font-size:14px;
-  margin-top:5px;
-}
-
-/* POPUP PLAYER */
+/* POPUP */
 #videoPopup{
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset:0;
   background:#000;
   display:none;
   z-index:9999;
@@ -65,31 +49,21 @@ h2{
 
 /* CLOSE BUTTON */
 .close-btn{
-  position:fixed;
-  top:17px;
+  position:absolute;
+  top:15px;
   right:15px;
-  z-index:10000;
+  z-index:10001;
   background:#2962ff;
   color:#fff;
   border:2px solid #fff;
   font-size:22px;
-  width:37px;
-  height:37px;
+  width:38px;
+  height:38px;
   border-radius:50%;
   cursor:pointer;
 }
 
-.close-btn:hover{
-  background:#fff ;
-  color:#2962ff ;
-  border:2px solid #2962ff;
-}
-
-.popup-content{
-  width:100%;
-  height:100%;
-}
-
+.popup-content,
 .popup-content iframe{
   width:100%;
   height:100%;
@@ -105,31 +79,13 @@ h2{
 <button class="item" onclick="openPlayer('https://filmyfly4wap.github.io/player/INDvsNZ-hindi.html')">
   <div class="item-icon"></div>
   <div>
-    <div class="title">HINDI</div>
-    <div class="link-text">Play</div>
+    <b>HINDI</b><br>Play
   </div>
 </button>
 
-<button class="item" onclick="openPlayer('https://filmyfly4wap.github.io/live/?url=https://d1g8wgjurz8via.cloudfront.net/bpk-tv/Zeecinemahd/default/manifest.mpd&keyId=f56beaac9f124616872c741c9ce4fa4e&key=5d40a903238f4ad98abbed1877d4e3d1')">
-  <div class="item-icon"></div>
-  <div>
-    <div class="title">English 1</div>
-    <div class="link-text">Play</div>
-  </div>
-</button>
-
-<button class="item" onclick="openPlayer('https://filmyfly4wap.github.io/live/?url=https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/dash/enc/wf8usag51e/out/v1/bd3b0c314fff4bb1ab4693358f3cd2d3/cenc.mpd&keyId=d0f2e5c39e70c18f29bf77768a1ad89a&key=d6853c51fcf37a18905f0609972395d7')">
-  <div class="item-icon"></div>
-  <div>
-    <div class="title">English 2</div>
-    <div class="link-text">Play</div>
-  </div>
-</button>
-
-<!-- POPUP PLAYER -->
 <div id="videoPopup">
   <button class="close-btn" onclick="closePlayer()">✕</button>
-  <div class="popup-content" id="popupBox">
+  <div class="popup-content">
     <iframe id="videoFrame" allowfullscreen></iframe>
   </div>
 </div>
@@ -138,20 +94,14 @@ h2{
 function openPlayer(url){
   const popup = document.getElementById("videoPopup");
   const frame = document.getElementById("videoFrame");
-  const box = document.getElementById("popupBox");
 
   frame.src = url;
   popup.style.display = "block";
 
-  if (box.requestFullscreen) box.requestFullscreen();
-  else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
-  else if (box.msRequestFullscreen) box.msRequestFullscreen();
+  // iframe fullscreen (important fix)
+  if (frame.requestFullscreen) frame.requestFullscreen();
+  else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
 }
-
-// FULLSCREEN EXIT = CLOSE
-document.addEventListener("fullscreenchange", () => {
-  if (!document.fullscreenElement) closePlayer();
-});
 
 function closePlayer(){
   const popup = document.getElementById("videoPopup");
