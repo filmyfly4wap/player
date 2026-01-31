@@ -22,8 +22,9 @@
         /* Header Section */
         .header {
             background: linear-gradient(135deg, #2962ff 0%, #0d47a1 100%);
-            padding: 15px 20px;
-            text-align: center;
+            
+            text-align: left;
+            padding: 7px 0px 7px 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 10;
@@ -35,23 +36,8 @@
             letter-spacing: 0.5px;
         }
         
-        .status {
-            font-size: 14px;
-            color: #bbdefb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .live-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #f44336;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
+
+
         
         @keyframes pulse {
             0% { opacity: 1; }
@@ -59,31 +45,7 @@
             100% { opacity: 1; }
         }
         
-        .info-box {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px 15px;
-            margin: 15px;
-            border-radius: 8px;
-            font-size: 14px;
-            color: #e3f2fd;
-            border-left: 4px solid #2962ff;
-        }
-        
-        .warning {
-            background: rgba(255, 193, 7, 0.1);
-            border-left-color: #ffc107;
-            margin: 10px 15px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .warning-icon {
-            font-size: 18px;
-            color: #ffc107;
-            flex-shrink: 0;
-        }
+ 
         
         h2 {
             box-shadow: 0 8px 20px -10px rgba(0,0,0,0.6);
@@ -103,7 +65,7 @@
             background: rgba(255, 255, 255, 0.05);
             border: none;
             border-left: 4px solid #2962ff;
-            border-radius: 0 8px 8px 0;
+            border-radius: 10px 0px 0px 10px;
             padding: 18px 15px;
             display: flex;
             align-items: center;
@@ -142,38 +104,6 @@
             display: flex;
             align-items: center;
             gap: 6px;
-        }
-        
-        .quality-badge {
-            background: #4caf50;
-            color: white;
-            font-size: 12px;
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin-left: 8px;
-        }
-        
-        .whatsapp-btn {
-            background: #25D366;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 14px;
-            margin: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            width: calc(100% - 30px);
-            transition: all 0.3s ease;
-        }
-        
-        .whatsapp-btn:hover {
-            background: #128C7E;
-            transform: translateY(-2px);
         }
         
         /* POPUP PLAYER */
@@ -293,33 +223,19 @@
 <body>
     <div class="header">
         <h1>cricketlive.site</h1>
-        <div class="status">
-            <span class="live-dot"></span>
-            <span>LIVE NOW</span>
-        </div>
+
     </div>
     
-    <div class="info-box">
-        <div style="font-weight: bold; margin-bottom: 5px;">NOW PLAYING: JAWAN</div>
-        <div>7 MIN MAX HD • CricketLiveSpot - 0:01</div>
-    </div>
+
     
-    <button class="whatsapp-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.76.982.998-3.675-.236-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.9 6.994c-.004 5.45-4.438 9.88-9.888 9.88m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.333.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.333 11.893-11.893 0-3.18-1.24-6.162-3.495-8.411"/>
-        </svg>
-        JOIN WhatsApp Group
-    </button>
+
+
     
-    <div class="warning">
-        <div class="warning-icon">⚠</div>
-        <div>Agar video load nahi ho rahi toh Browser refresh karein.</div>
-    </div>
-    
+
     <h2>Streaming Links</h2>
     
     <div class="stream-list">
-        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+        <div class="item" onclick="openPlayer('https://allrounderlive.pages.dev/player2?url=https://modder-guy.freedekholive-577.workers.dev/live/hotstar.m3u8')">
             <div class="item-icon"></div>
             <div class="item-content">
                 <div class="title">HINDI <span class="quality-badge">HD</span></div>
@@ -327,7 +243,7 @@
             </div>
         </div>
         
-        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+        <div class="item" onclick="openPlayer('https://filmyfly4wap.github.io/live/?url=https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Sports_HD2_BTS/output/index.mpd&keyId=9457eb90129456fa8ea95e10ba4ac51e&key=e620a970cea474c491ac78ae71a4d764')">
             <div class="item-icon"></div>
             <div class="item-content">
                 <div class="title">English 1 <span class="quality-badge">FHD</span></div>
@@ -335,7 +251,7 @@
             </div>
         </div>
         
-        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+        <div class="item" onclick="openPlayer('https://filmyfly4wap.github.io/live/?url=https://ev-fast-mpd.starzplayarabia.com/live/eds/CricLife2/DASH/CricLife2.mpd&keyId=48bef83b4c6a3c5189b01b0126210da4&key=bd085230b7b09e50954fe0af111a8a9f')">
             <div class="item-icon"></div>
             <div class="item-content">
                 <div class="title">English 2 <span class="quality-badge">HD</span></div>
@@ -343,22 +259,14 @@
             </div>
         </div>
         
-        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+        <div class="item" onclick="openPlayer('https://filmyfly4wap.github.io/live2/?url=https://a201aivottlinear-a.akamaihd.net/OTTB/lhr-nitro/clients/dash/enc/f60kqesunw/out/v1/a435ed7a00f947deb4369b46d8f2fb70/cenc.mpd&keyId=1779c27b9d077a3ba0c9cc1bb9a94b9f&key=cc5cf3b7928fb9e0a1ee6a8b566f0a8e')">
             <div class="item-icon"></div>
             <div class="item-content">
-                <div class="title">Tamil Commentary <span class="quality-badge">SD</span></div>
-                <div class="link-text">Play Tamil Commentary Stream</div>
+                <div class="title">English 3 <span class="quality-badge">HD</span></div>
+                <div class="link-text">Play English Commentary Stream 3</div>
             </div>
         </div>
-        
-        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
-            <div class="item-icon"></div>
-            <div class="item-content">
-                <div class="title">Telugu Commentary <span class="quality-badge">HD</span></div>
-                <div class="link-text">Play Telugu Commentary Stream</div>
-            </div>
-        </div>
-    </div>
+
     
     <div class="instructions">
         <div style="font-weight: bold; margin-bottom: 8px;">Instructions:</div>
@@ -380,7 +288,7 @@
     </div>
     
     <div class="footer">
-        cricketlive.site © 2023 | All streams are for promotional purposes only
+         © cricketlive.site 2026
     </div>
 
     <script>
