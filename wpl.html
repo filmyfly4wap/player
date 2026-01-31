@@ -303,23 +303,9 @@
             // Show the popup
             popup.style.display = "block";
             
-            // Request fullscreen for the popup
-            if (popup.requestFullscreen) {
-                popup.requestFullscreen();
-            } else if (popup.webkitRequestFullscreen) {
-                popup.webkitRequestFullscreen();
-            } else if (popup.msRequestFullscreen) {
-                popup.msRequestFullscreen();
-            }
+
             
-            // Lock orientation on mobile if supported
-            if (screen.orientation && screen.orientation.lock) {
-                screen.orientation.lock("landscape").catch(err => {
-                    console.log("Orientation lock failed: ", err);
-                });
-            }
-        }
-        
+
         // Close video player and exit fullscreen
         function closePlayer() {
             const popup = document.getElementById("videoPopup");
@@ -375,10 +361,7 @@
             }
         });
         
-        // WhatsApp button functionality
-        document.querySelector('.whatsapp-btn').addEventListener('click', function() {
-            alert('Joining WhatsApp group... (This is a demo. In a real site, this would open WhatsApp)');
-        });
+
     </script>
 </body>
 </html>
