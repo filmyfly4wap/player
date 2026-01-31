@@ -305,7 +305,14 @@
             
 
             
-
+            // Lock orientation on mobile if supported
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock("landscape").catch(err => {
+                    console.log("Orientation lock failed: ", err);
+                });
+            }
+        }
+        
         // Close video player and exit fullscreen
         function closePlayer() {
             const popup = document.getElementById("videoPopup");
