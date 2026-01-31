@@ -1,120 +1,476 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>cricketlive.site</title>
-
-<style>
-body{
-  margin:0;
-  background:#161616;
-  font-family:Arial,sans-serif;
-  color:#fff;
-}
-
-h2{
-  padding:10px 20px;
-  font-size:20px;
-}
-
-/* LIST */
-.item{
-  width:100%;
-  background:none;
-  border:none;
-  border-bottom:1px solid #555;
-  padding:20px 10px;
-  display:flex;
-  align-items:center;
-  cursor:pointer;
-}
-
-.item-icon{
-  width:0;
-  border-left:8px solid #fff;
-  border-top:8px solid transparent;
-  border-bottom:8px solid transparent;
-  margin:0 15px 0 10px;
-}
-
-/* POPUP */
-#videoPopup{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:none;
-  z-index:9999;
-}
-
-/* CLOSE BUTTON */
-.close-btn{
-  position:absolute;
-  top:15px;
-  right:15px;
-  z-index:10001;
-  background:#2962ff;
-  color:#fff;
-  border:2px solid #fff;
-  font-size:22px;
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  cursor:pointer;
-}
-
-.popup-content,
-.popup-content iframe{
-  width:100%;
-  height:100%;
-  border:none;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Live Streaming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            background: #161616;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, #2962ff 0%, #0d47a1 100%);
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+        
+        .status {
+            font-size: 14px;
+            color: #bbdefb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .live-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #f44336;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .info-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px;
+            margin: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #e3f2fd;
+            border-left: 4px solid #2962ff;
+        }
+        
+        .warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-left-color: #ffc107;
+            margin: 10px 15px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .warning-icon {
+            font-size: 18px;
+            color: #ffc107;
+            flex-shrink: 0;
+        }
+        
+        h2 {
+            box-shadow: 0 8px 20px -10px rgba(0,0,0,0.6);
+            padding: 12px 20px;
+            font-size: 20px;
+            background: #1e1e1e;
+            margin: 20px 0 10px 0;
+        }
+        
+        /* LIST ITEMS */
+        .stream-list {
+            padding: 0 15px 20px;
+        }
+        
+        .item {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-left: 4px solid #2962ff;
+            border-radius: 0 8px 8px 0;
+            padding: 18px 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .item:hover {
+            background: rgba(41, 98, 255, 0.15);
+            transform: translateX(5px);
+        }
+        
+        .item-icon {
+            width: 0;
+            border-left: 10px solid #fff;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            margin: 0 15px 0 5px;
+        }
+        
+        .item-content {
+            flex: 1;
+        }
+        
+        .title {
+            color: #eee;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        
+        .link-text {
+            color: #2962ff;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .quality-badge {
+            background: #4caf50;
+            color: white;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+        
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            margin: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            width: calc(100% - 30px);
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+        
+        /* POPUP PLAYER */
+        #videoPopup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        
+        /* CLOSE BUTTON - FIXED VERSION */
+        .close-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: #2962ff;
+            color: #fff;
+            border: 2px solid #fff;
+            font-size: 24px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close-btn:hover {
+            background: #fff;
+            color: #2962ff;
+            border: 2px solid #2962ff;
+            transform: scale(1.1);
+        }
+        
+        .popup-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .popup-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .fullscreen-notice {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 13px;
+            border-top: 1px solid #333;
+            margin-top: 20px;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            margin: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .stream-list {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            .whatsapp-btn {
+                max-width: 600px;
+                margin: 15px auto;
+            }
+            
+            .popup-content iframe {
+                max-width: 90%;
+                max-height: 80%;
+                border-radius: 8px;
+            }
+            
+            .close-btn {
+                top: 30px;
+                right: 30px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="header">
+        <h1>cricketlive.site</h1>
+        <div class="status">
+            <span class="live-dot"></span>
+            <span>LIVE NOW</span>
+        </div>
+    </div>
+    
+    <div class="info-box">
+        <div style="font-weight: bold; margin-bottom: 5px;">NOW PLAYING: JAWAN</div>
+        <div>7 MIN MAX HD • CricketLiveSpot - 0:01</div>
+    </div>
+    
+    <button class="whatsapp-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.76.982.998-3.675-.236-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.9 6.994c-.004 5.45-4.438 9.88-9.888 9.88m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.333.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.333 11.893-11.893 0-3.18-1.24-6.162-3.495-8.411"/>
+        </svg>
+        JOIN WhatsApp Group
+    </button>
+    
+    <div class="warning">
+        <div class="warning-icon">⚠</div>
+        <div>Agar video load nahi ho rahi toh Browser refresh karein.</div>
+    </div>
+    
+    <h2>Streaming Links</h2>
+    
+    <div class="stream-list">
+        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+            <div class="item-icon"></div>
+            <div class="item-content">
+                <div class="title">HINDI <span class="quality-badge">HD</span></div>
+                <div class="link-text">Play Hindi Commentary Stream</div>
+            </div>
+        </div>
+        
+        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+            <div class="item-icon"></div>
+            <div class="item-content">
+                <div class="title">English 1 <span class="quality-badge">FHD</span></div>
+                <div class="link-text">Play English Commentary Stream 1</div>
+            </div>
+        </div>
+        
+        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+            <div class="item-icon"></div>
+            <div class="item-content">
+                <div class="title">English 2 <span class="quality-badge">HD</span></div>
+                <div class="link-text">Play English Commentary Stream 2</div>
+            </div>
+        </div>
+        
+        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+            <div class="item-icon"></div>
+            <div class="item-content">
+                <div class="title">Tamil Commentary <span class="quality-badge">SD</span></div>
+                <div class="link-text">Play Tamil Commentary Stream</div>
+            </div>
+        </div>
+        
+        <div class="item" onclick="openPlayer('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+            <div class="item-icon"></div>
+            <div class="item-content">
+                <div class="title">Telugu Commentary <span class="quality-badge">HD</span></div>
+                <div class="link-text">Play Telugu Commentary Stream</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="instructions">
+        <div style="font-weight: bold; margin-bottom: 8px;">Instructions:</div>
+        <div>1. Click on any stream link to open the player</div>
+        <div>2. Click the close button (✕) to exit full screen</div>
+        <div>3. Drag from top and touch the back button to exit full screen on mobile</div>
+        <div>4. If video doesn't load, refresh your browser</div>
+    </div>
+    
+    <!-- POPUP PLAYER -->
+    <div id="videoPopup">
+        <div class="close-btn" onclick="closePlayer()">✕</div>
+        <div class="popup-content">
+            <iframe id="videoFrame" allowfullscreen></iframe>
+        </div>
+        <div class="fullscreen-notice">
+            Press ESC or click the close button to exit full screen
+        </div>
+    </div>
+    
+    <div class="footer">
+        cricketlive.site © 2023 | All streams are for promotional purposes only
+    </div>
 
-<h2>cricketlive.site</h2>
-
-<button class="item" onclick="openPlayer('https://filmyfly4wap.github.io/player/INDvsNZ-hindi.html')">
-  <div class="item-icon"></div>
-  <div>
-    <b>HINDI</b><br>Play
-  </div>
-</button>
-
-<div id="videoPopup">
-  <button class="close-btn" onclick="closePlayer()">✕</button>
-  <div class="popup-content">
-    <iframe id="videoFrame" allowfullscreen></iframe>
-  </div>
-</div>
-
-<script>
-function openPlayer(url){
-  const popup = document.getElementById("videoPopup");
-  const frame = document.getElementById("videoFrame");
-
-  frame.src = url;
-  popup.style.display = "block";
-
-  // iframe fullscreen (important fix)
-  if (frame.requestFullscreen) frame.requestFullscreen();
-  else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
-}
-
-function closePlayer(){
-  const popup = document.getElementById("videoPopup");
-  const frame = document.getElementById("videoFrame");
-
-  frame.src = "";
-  popup.style.display = "none";
-
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-  }
-}
-</script>
-
+    <script>
+        // Open video player with fullscreen
+        function openPlayer(url) {
+            const popup = document.getElementById("videoPopup");
+            const frame = document.getElementById("videoFrame");
+            
+            // Set the video source
+            frame.src = url;
+            
+            // Show the popup
+            popup.style.display = "block";
+            
+            // Request fullscreen for the popup
+            if (popup.requestFullscreen) {
+                popup.requestFullscreen();
+            } else if (popup.webkitRequestFullscreen) {
+                popup.webkitRequestFullscreen();
+            } else if (popup.msRequestFullscreen) {
+                popup.msRequestFullscreen();
+            }
+            
+            // Lock orientation on mobile if supported
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock("landscape").catch(err => {
+                    console.log("Orientation lock failed: ", err);
+                });
+            }
+        }
+        
+        // Close video player and exit fullscreen
+        function closePlayer() {
+            const popup = document.getElementById("videoPopup");
+            const frame = document.getElementById("videoFrame");
+            
+            // Stop the video
+            frame.src = "";
+            
+            // Hide the popup
+            popup.style.display = "none";
+            
+            // Exit fullscreen if currently in fullscreen
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+            
+            // Unlock orientation
+            if (screen.orientation && screen.orientation.unlock) {
+                screen.orientation.unlock();
+            }
+        }
+        
+        // Close player when ESC key is pressed
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closePlayer();
+            }
+        });
+        
+        // Close player when exiting fullscreen
+        document.addEventListener("fullscreenchange", function() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+                closePlayer();
+            }
+        });
+        
+        // Also listen for webkit and ms fullscreen changes
+        document.addEventListener("webkitfullscreenchange", function() {
+            if (!document.webkitFullscreenElement) {
+                closePlayer();
+            }
+        });
+        
+        document.addEventListener("MSFullscreenChange", function() {
+            if (!document.msFullscreenElement) {
+                closePlayer();
+            }
+        });
+        
+        // WhatsApp button functionality
+        document.querySelector('.whatsapp-btn').addEventListener('click', function() {
+            alert('Joining WhatsApp group... (This is a demo. In a real site, this would open WhatsApp)');
+        });
+    </script>
 </body>
 </html>
